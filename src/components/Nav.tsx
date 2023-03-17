@@ -8,16 +8,21 @@ export interface IPage {
 
 export default class Nav extends Component {
   public render() {
-    const pages: IPage[] = [
-      {
-        name: 'about',
-        link: '/about',
-      },
-      {
-        name: 'main',
-        link: '/',
-      },
-    ];
-    return pages.map((page) => <NavItem key={page.name} title={page.name} to={page.link} />);
+    return (
+      <nav className="">
+        <ul className="list-none flex">
+          <NavItem
+            className="mr-3 font-bold text-xl  hover:text-red-400 transition-colors"
+            title="about"
+            to="/about"
+          />
+          <NavItem
+            className="font-bold text-xl hover:text-red-400 transition-colors"
+            title="main"
+            to="/"
+          />
+        </ul>
+      </nav>
+    );
   }
 }
