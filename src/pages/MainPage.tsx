@@ -1,4 +1,6 @@
+import Product from '../components/Product';
 import React, { Component } from 'react';
+import data from '../assets/data.json';
 
 interface IMainPageState {
   inputValue: string;
@@ -19,7 +21,7 @@ export default class MainPage extends Component {
       <div className="container mx-auto max-w-2xl pt-5">
         <div>
           <input
-            className="border py-2 px-4 mb-2 w-full"
+            className="border rounded py-2 px-4 mb-2 w-full"
             type="text"
             value={this.state.inputValue}
             onChange={(e) => this.handleChange(e)}
@@ -27,7 +29,11 @@ export default class MainPage extends Component {
           />
         </div>
         <div>
-          <ul>тут будет список</ul>
+          <ul>
+            {data.products.map((product) => (
+              <Product product={product} key={product.id} />
+            ))}
+          </ul>
         </div>
       </div>
     );
