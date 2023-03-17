@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 interface INavItemProps {
   title: string;
   to: string;
+  className?: string;
 }
 
 export default class NavItem extends Component<INavItemProps> {
@@ -11,10 +12,12 @@ export default class NavItem extends Component<INavItemProps> {
     super(props);
   }
   render() {
-    const { title, to } = this.props;
+    const { title, to, className } = this.props;
     return (
       <li>
-        <Link to={to}>{title}</Link>
+        <Link className={className} to={to}>
+          {title}
+        </Link>
       </li>
     );
   }
