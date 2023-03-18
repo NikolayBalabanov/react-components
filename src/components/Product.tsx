@@ -40,6 +40,7 @@ export default class Product extends Component<IProductProps, IProductState> {
           onClick={() => {
             this.setOpen();
           }}
+          type="button"
         >
           {this.state.isOpen ? 'Hide Details' : 'Show Details'}
         </button>

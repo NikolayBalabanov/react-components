@@ -5,7 +5,7 @@ export default class NeverPage extends Component {
   render() {
     return (
       <div className="">
-        <h2 className="">404 — страница не найдена</h2>
+        <h2 className="">{`404 — page doesn't exist`}</h2>
         <Link to="/" className="">
           Back to posts
         </Link>
