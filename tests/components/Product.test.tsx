@@ -22,8 +22,8 @@ const testData = {
     'https://i.dummyjson.com/data/products/1/thumbnail.jpg',
   ],
 };
-describe('App component tests:', () => {
-  it('should have logo: "Searcher"', async () => {
+describe('Product tests:', () => {
+  it('should render Product component and check its content', async () => {
     render(<Product product={testData} />);
     expect(screen.getByText(testData.title));
     const user = userEvent.setup();
