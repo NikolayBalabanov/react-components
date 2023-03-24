@@ -20,6 +20,7 @@ const GENDER_ERROR_MESSAGE = 'Please select one of the values';
 export default class Form extends Component<IFormProps> {
   form = React.createRef<HTMLFormElement>();
   name = React.createRef<HTMLInputElement>();
+  phone = React.createRef<HTMLInputElement>();
   date = React.createRef<HTMLInputElement>();
   select = React.createRef<HTMLSelectElement>();
   favorite = React.createRef<HTMLInputElement>();
@@ -65,16 +66,22 @@ export default class Form extends Component<IFormProps> {
   render() {
     return (
       <form
-        className="flex flex-col items-start"
+        className="flex flex-col items-start px-4"
         ref={this.form}
         onSubmit={(event) => this.handleSubmit(event)}
       >
         <h2 className="mb-3 text-2xl font-semibold">Here you can add your contacts info</h2>
         <input
-          className="border rounded py-1 px-4 mb-2 min-w-72 w-2/3"
+          className="border rounded py-1 px-4 mb-2 lg:w-80 sm:w-3/4 w-full"
           type="text"
           ref={this.name}
           placeholder="Enter contact's name and surname"
+        />
+        <input
+          className="border rounded py-1 px-4 mb-2 lg:w-80 sm:w-3/4 w-full"
+          type="text"
+          ref={this.phone}
+          placeholder="Enter contact's phone"
         />
         {this.props.prevState.nameError && (
           <span className="text-sm text-red-600">{this.props.prevState.nameError}</span>

@@ -1,5 +1,6 @@
 import Form, { TErrorsUpdate } from '../components/Form';
 import React, { Component } from 'react';
+import ContactItem from '../components/ContactItem';
 
 export interface IContact {
   id: number;
@@ -44,16 +45,9 @@ export default class Forms extends Component<object> {
           />
         </div>
         <div>
-          <ul>
+          <ul className="grid gap-4 lg:grid-cols-4 sm:grid-cols-2 grid-cols-1">
             {this.state.contacts.map((contact) => (
-              <div key={contact.id}>
-                <h2>{contact.name}</h2>
-                <span>{contact.date}</span>
-                <span>Role: {contact.role}</span>
-                {contact.favorite && <span>FAVORITE</span>}
-                <span>Gender: {contact.gender}</span>
-                <img src={contact.photo.toString()} alt={contact.name} />
-              </div>
+              <ContactItem contact={contact} key={contact.id} />
             ))}
           </ul>
         </div>
