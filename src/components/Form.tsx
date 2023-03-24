@@ -50,7 +50,9 @@ export default class Form extends Component<IFormProps> {
         role: this.select.current!.value,
         favorite: this.favorite.current!.checked,
         gender: this.male.current?.checked ? 'male' : 'female',
-        photo: URL.createObjectURL(this.fileInput.current!.files![0]),
+        photo: this.fileInput.current!.files![0]
+          ? URL.createObjectURL(this.fileInput.current!.files![0])
+          : 'https://cdn-icons-png.flaticon.com/512/1077/1077114.png',
       };
       alert('The data has been saved!');
       this.props.updateContacts([...this.props.prevState.contacts, newContact]);

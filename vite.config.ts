@@ -23,6 +23,7 @@ export default defineConfig({
       ],
       skipFull: false,
       reporter: 'text',
+      include: ['**/*.{jsx,tsx}'],
     },
   },
 });

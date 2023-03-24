@@ -25,6 +25,19 @@ describe('App component tests:', () => {
     await user.click(screen.getByText(/about/));
     expect(screen.getByRole('heading', { level: 2 })).toHaveTextContent(/About page/);
   });
+  it('Renders forms page if user click at forms link', async () => {
+    render(
+      <MemoryRouter initialEntries={['/']}>
+        <App />
+      </MemoryRouter>
+    );
+    const user = userEvent.setup();
+    expect(screen.getByPlaceholderText('Store search')).toBeInTheDocument();
+    await user.click(screen.getByText(/forms/));
+    expect(screen.getByRole('heading', { level: 2 })).toHaveTextContent(
+      /Here you can add your contacts info/
+    );
+  });
   it('Renders never page if invalid path', async () => {
     render(
       <MemoryRouter initialEntries={['/myFavoritePage']}>
