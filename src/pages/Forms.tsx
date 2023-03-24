@@ -5,6 +5,7 @@ import ContactItem from '../components/ContactItem';
 export interface IContact {
   id: number;
   name: string;
+  phone: string;
   date: string[];
   role: string;
   favorite: boolean;
@@ -16,6 +17,7 @@ export interface IFormsState {
   contacts: IContact[];
   nameError: string;
   genderError: string;
+  phoneError: string;
 }
 
 export default class Forms extends Component<object> {
@@ -23,6 +25,7 @@ export default class Forms extends Component<object> {
     contacts: [],
     genderError: '',
     nameError: '',
+    phoneError: '',
   };
 
   hendleUpdateContacts = (newArr: IContact[]) => {
@@ -34,10 +37,9 @@ export default class Forms extends Component<object> {
   };
 
   render() {
-    console.log(this.state);
     return (
       <div className="container mx-auto pt-5">
-        <div className="container mx-auto max-w-3xl">
+        <div className="container mx-auto max-w-3xl mb-3">
           <Form
             prevState={this.state}
             updateContacts={this.hendleUpdateContacts}

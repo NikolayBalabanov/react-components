@@ -1,11 +1,13 @@
 import { IContact, IFormsState } from 'pages/Forms';
 import React, { Component } from 'react';
+import { checkPhoneInput } from '../utils/checkPhoneInputs';
 import { checkGenderInputs } from '../utils/checkGenderInputs';
 import { checkNameInput } from '../utils/checkNameInput';
 
 export type TErrorsUpdate = {
   nameError: string;
   genderError: string;
+  phoneError: string;
 };
 
 interface IFormProps {
@@ -15,6 +17,8 @@ interface IFormProps {
 }
 
 const NAME_ERROR_MESSAGE = 'Аt least 2 words starting with a capital letter are expected';
+const PHONE_ERROR_MESSAGE =
+  'Must start with "+", contain only digits and be no shorter than 9 digits';
 const GENDER_ERROR_MESSAGE = 'Please select one of the values';
 
 export default class Form extends Component<IFormProps> {
@@ -38,6 +42,7 @@ export default class Form extends Component<IFormProps> {
       const newContact: IContact = {
         id: this.props.prevState.contacts.length ? this.props.prevState.contacts.length : 0,
         name: this.name.current!.value,
+        phone: this.phone.current!.value,
         date:
           this.date.current!.value.split('-').length === 3
             ? this.date.current!.value.split('-')
@@ -47,7 +52,7 @@ export default class Form extends Component<IFormProps> {
         gender: this.male.current?.checked ? 'male' : 'female',
         photo: URL.createObjectURL(this.fileInput.current!.files![0]),
       };
-      console.log('new contact', newContact);
+      alert('The data has been saved!');
       this.props.updateContacts([...this.props.prevState.contacts, newContact]);
       this.form.current!.reset();
     }
@@ -56,11 +61,13 @@ export default class Form extends Component<IFormProps> {
   validation = () => {
     const isName = checkNameInput(this.name.current!.value);
     const isGender = checkGenderInputs(this.male.current!.checked, this.female.current!.checked);
+    const isPhone = checkPhoneInput(this.phone.current!.value.trim());
     this.props.updateErrors({
       nameError: !isName ? NAME_ERROR_MESSAGE : '',
       genderError: !isGender ? GENDER_ERROR_MESSAGE : '',
+      phoneError: !isPhone ? PHONE_ERROR_MESSAGE : '',
     });
-    if (isName && isGender) return true;
+    if (isName && isGender && isPhone) return true;
     return false;
   };
   render() {
@@ -77,14 +84,17 @@ export default class Form extends Component<IFormProps> {
           ref={this.name}
           placeholder="Enter contact's name and surname"
         />
+        {this.props.prevState.nameError && (
+          <span className="text-sm text-red-600">{this.props.prevState.nameError}</span>
+        )}
         <input
           className="border rounded py-1 px-4 mb-2 lg:w-80 sm:w-3/4 w-full"
           type="text"
           ref={this.phone}
           placeholder="Enter contact's phone"
         />
-        {this.props.prevState.nameError && (
-          <span className="text-sm text-red-600">{this.props.prevState.nameError}</span>
+        {this.props.prevState.phoneError && (
+          <span className="text-sm text-red-600">{this.props.prevState.phoneError}</span>
         )}
         <label className="text-xl font-medium">
           Birth date:
@@ -98,7 +108,11 @@ export default class Form extends Component<IFormProps> {
         </label>
         <label className="text-xl font-medium">
           Role:
-          <select className="rounded py-1 px-2 ml-2 mb-2" defaultValue="friend" ref={this.select}>
+          <select
+            className="rounded py-1 px-4 w-28 ml-2 mb-2"
+            defaultValue="friend"
+            ref={this.select}
+          >
             <option value="coworker">Coworker</option>
             <option value="family">Family</option>
             <option value="friend">Friend</option>
@@ -151,7 +165,7 @@ export default class Form extends Component<IFormProps> {
           <input type="file" accept="image/*" ref={this.fileInput} />
         </label>
         <button
-          className="border border-blue-500 rounded-sm bg-white px-4 py-2 hover:bg-blue-500 transition-colors"
+          className="border border-blue-500 rounded-sm bg-white px-5 py-2 hover:bg-blue-500 transition-colors"
           type="submit"
         >
           Submit

@@ -13,11 +13,15 @@ export default class ContactItem extends Component<IContactItemProps> {
     return (
       <div className="p-4 rounded-lg flex flex-col bg-slate-300" key={this.props.contact.id}>
         <img
-          className="rounded-md mb-3 hover:scale-105 transition-transform"
+          className="h-80 object-cover rounded-md mb-3 hover:scale-105 transition-transform"
           src={this.props.contact.photo.toString()}
           alt={this.props.contact.name}
         />
         <h2 className="text-lg font-medium mb-1">{this.props.contact.name}</h2>
+        <a className="text-base font-medium mb-1" href={`tel:${this.props.contact.phone}`}>
+          Phone: {this.props.contact.phone}
+        </a>
+
         {this.props.contact.date.length === 3 && (
           <span className="text-base mb-1">
             Birthday
