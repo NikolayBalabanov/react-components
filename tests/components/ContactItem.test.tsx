@@ -1,6 +1,5 @@
 import { render, screen } from '@testing-library/react';
 import React from 'react';
-import userEvent from '@testing-library/user-event';
 import ContactItem from '../../src/components/ContactItem';
 
 const mockData = {
