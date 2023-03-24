@@ -17,9 +17,14 @@ export default class Nav extends Component {
             to="/about"
           />
           <NavItem
-            className="font-bold text-xl hover:text-red-400 transition-colors"
+            className="mr-3 font-bold text-xl hover:text-red-400 transition-colors"
             title="main"
             to="/"
+          />
+          <NavItem
+            className="font-bold text-xl hover:text-red-400 transition-colors"
+            title="forms"
+            to="/forms"
           />
         </ul>
       </nav>
