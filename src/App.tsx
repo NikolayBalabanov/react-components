@@ -3,7 +3,7 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import About from './pages/About';
 import NeverPage from './pages/NeverPage';
-import MainPage from './pages/MainPage';
+import { MainPage } from './pages/MainPage';
 import Forms from './pages/Forms';
 
 function App() {

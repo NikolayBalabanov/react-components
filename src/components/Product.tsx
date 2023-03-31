@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { FC, useState } from 'react';
 
 interface IProduct {
   id: number;
@@ -18,7 +18,7 @@ interface IProductProps {
   product: IProduct;
 }
 
-function Product({ product }: IProductProps) {
+export const Product: FC<IProductProps> = ({ product }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const btnBgClassName = isOpen ? 'bg-yellow-400' : 'bg-blue-400';
   const btnClasses = ['py-2 px-4 boder rounded', btnBgClassName];
@@ -27,13 +27,7 @@ function Product({ product }: IProductProps) {
       <img className="w-3/6" src={product.thumbnail} alt={product.title} />
       <p>{product.title}</p>
       <p className="font-bold">{product.price}</p>
-      <button
-        className={btnClasses.join(' ')}
-        onClick={() => {
-          setIsOpen(!isOpen);
-        }}
-        type="button"
-      >
+      <button className={btnClasses.join(' ')} onClick={() => setIsOpen(!isOpen)} type="button">
         {isOpen ? 'Hide Details' : 'Show Details'}
       </button>
       {isOpen && (
@@ -46,6 +40,4 @@ function Product({ product }: IProductProps) {
       )}
     </div>
   );
-}
-
-export default Product;
+};
