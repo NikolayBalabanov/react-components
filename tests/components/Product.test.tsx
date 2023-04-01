@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import React from 'react';
 import userEvent from '@testing-library/user-event';
-import Product from '../../src/components/Product';
+import { Product } from '../../src/components/Product';
 
 const testData = {
   id: 1,
@@ -22,8 +22,8 @@ const testData = {
     'https://i.dummyjson.com/data/products/1/thumbnail.jpg',
   ],
 };
-describe('App component tests:', () => {
-  it('should have logo: "Searcher"', async () => {
+describe('Produts tests...:', () => {
+  it('should content and button with content "Show Details"', async () => {
     render(<Product product={testData} />);
     expect(screen.getByText(testData.title));
     const user = userEvent.setup();

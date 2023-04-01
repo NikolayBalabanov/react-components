@@ -36,9 +36,9 @@ const ConfirmModal: FC<IConfirmProps> = ({ onConfirm }) => {
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex flex-col-reverse text-center mb-[20px] justify-between items-center">
-          <h2 className="text-2xl font-medium leading-[17px] text-gray-900">
+          <h3 className="text-2xl font-medium leading-[17px] text-gray-900">
             The data has been saved!
-          </h2>
+          </h3>
         </div>
         <div className="flex flex-col">
           <ButtonConfirm text="Okay!" callback={() => close(onConfirm)} />

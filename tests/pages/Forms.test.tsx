@@ -39,7 +39,6 @@ describe('Forms Page:', () => {
   it('Try to fill the form correctly...', async () => {
     render(<Forms />);
     const user = userEvent.setup();
-    // expect(screen.getByPlaceholderText("Enter contact's name and surname")).toBeInTheDocument();
     const phoneNumber = '+375292221453';
     const validName = 'Some Name';
     const nameInput = screen.getByPlaceholderText("Enter contact's name and surname");
@@ -51,9 +50,9 @@ describe('Forms Page:', () => {
     await user.click(genderInput);
     expect(genderInput).toBeChecked();
     expect(submitButton).toHaveTextContent('Submit');
-    // await user.click(submitButton);
-    // expect(screen.getByText('The data has been saved!')).toBeInTheDocument();
-    // const okButton = screen.getByText('OK');
-    // await user.click(okButton);
+    await user.click(submitButton);
+    expect(screen.getByText('The data has been saved!')).toBeInTheDocument();
+    const confirmButton = screen.getByText('Okay!');
+    await user.click(confirmButton);
   });
 });

@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import React from 'react';
 import userEvent from '@testing-library/user-event';
-import MainPage from '../../src/pages/MainPage';
+import { MainPage } from '../../src/pages/MainPage';
 
 describe('Main Page:', () => {
   it('Contains input', async () => {

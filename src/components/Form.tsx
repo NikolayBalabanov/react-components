@@ -39,7 +39,6 @@ const Form: FC<IFormProps> = ({ contacts, updateContacts }) => {
     formState: { errors },
   } = useForm<Inputs>();
   const onSubmit: SubmitHandler<Inputs> = (data) => {
-    console.log(data);
     const newContact: IContact = {
       id: contacts.length ? contacts.length : 0,
       name: data.name,
@@ -52,7 +51,6 @@ const Form: FC<IFormProps> = ({ contacts, updateContacts }) => {
         ? URL.createObjectURL(data.file[0])
         : 'https://cdn-icons-png.flaticon.com/512/1077/1077114.png',
     };
-    console.log('newContact', newContact);
     setIsModalOpen(true);
     updateContacts([...contacts, newContact]);
     reset();
