@@ -21,10 +21,10 @@ export const MainPage: FC = () => {
     inputValue.current = value;
   }, [value]);
   return (
-    <div className="container mx-auto max-w-2xl pt-5">
-      <div>
+    <div className="container mx-auto">
+      <div className="flex mx-auto max-w-2xl pt-5">
         <input
-          className="border rounded py-2 px-4 mb-2 w-full"
+          className="border self-center rounded py-2 px-4 mb-2 w-full"
           type="text"
           value={value}
           onChange={(e) => handleChange(e)}
@@ -32,7 +32,7 @@ export const MainPage: FC = () => {
         />
       </div>
       <div>
-        <ul className="grid gap-4 lg:grid-cols-4 sm:grid-cols-2 grid-cols-1">
+        <ul className="grid grid-flow-row gap-4 lg:grid-cols-4 sm:grid-cols-2 grid-cols-1">
           {data.products.map((product) => (
             <Product product={product} key={product.id} />
           ))}
