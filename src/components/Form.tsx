@@ -1,6 +1,7 @@
 import { IContact } from 'pages/Forms';
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import ConfirmModal from './ConfirmModal';
 
 interface IFormProps {
   updateContacts: (e: IContact[]) => void;
@@ -30,6 +31,7 @@ enum RoleEnum {
 }
 
 const Form: FC<IFormProps> = ({ contacts, updateContacts }) => {
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const {
     register,
     handleSubmit,
@@ -51,13 +53,14 @@ const Form: FC<IFormProps> = ({ contacts, updateContacts }) => {
         : 'https://cdn-icons-png.flaticon.com/512/1077/1077114.png',
     };
     console.log('newContact', newContact);
-    alert('The data has been saved!');
+    setIsModalOpen(true);
     updateContacts([...contacts, newContact]);
     reset();
   };
 
   return (
     <form className="flex flex-col items-start px-4" onSubmit={handleSubmit(onSubmit)}>
+      {isModalOpen && <ConfirmModal onConfirm={() => setIsModalOpen(false)} />}
       <h2 className="mb-3 text-2xl font-semibold">Here you can add your contacts info</h2>
       <input
         className="border rounded py-1 px-4 mb-2 lg:w-80 sm:w-3/4 w-full"

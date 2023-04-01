@@ -13,13 +13,6 @@ export interface IContact {
   photo: string;
 }
 
-export interface IFormsState {
-  contacts: IContact[];
-  nameError: string;
-  genderError: string;
-  phoneError: string;
-}
-
 const Forms: FC = () => {
   const [contacts, setContacts] = useState<IContact[]>([]);
   const hendleUpdateContacts = (newArr: IContact[]) => {
