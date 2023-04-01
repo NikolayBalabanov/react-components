@@ -1,8 +1,8 @@
 import { Product } from '../components/Product';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { FC, useEffect, useRef, useState } from 'react';
 import data from '../assets/data.json';
 
-export const MainPage = () => {
+export const MainPage: FC = () => {
   const [value, setValue] = useState<string>('');
   const inputValue = useRef('');
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -32,7 +32,7 @@ export const MainPage = () => {
         />
       </div>
       <div>
-        <ul>
+        <ul className="grid gap-4 lg:grid-cols-4 sm:grid-cols-2 grid-cols-1">
           {data.products.map((product) => (
             <Product product={product} key={product.id} />
           ))}
