@@ -4,10 +4,11 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
+    "dev": "vite --open",
+    "build": "npm run lint && tsc && vite build",
     "preview": "vite preview",
-    "lint": "eslint . --fix",
+    "lint": "eslint --fix \"src/**/*.{ts,tsx,js,jsx}\"",
+    "format": "prettier --write \"src/**/*.{ts,tsx,js,jsx,css,scss}\"",
     "test": "vitest --coverage",
     "coverage": "vitest run --coverage"
   },
