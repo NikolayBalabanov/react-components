@@ -50,7 +50,7 @@ export const MainPage: FC = () => {
         {searchedError && <ErrorMessage content={searchedError} />}
         {isPostsLoading || isSearchedLoading ? (
           <Loader />
-        ) : movies.length > 0 ? (
+        ) : movies.length > 0 && !(fetchError || searchedError) ? (
           <ul className="grid grid-flow-row gap-4 lg:grid-cols-4 p-4 sm:grid-cols-2 grid-cols-1">
             {movies.map((movie) => (
               <MovieCard movie={movie} key={movie.id} />

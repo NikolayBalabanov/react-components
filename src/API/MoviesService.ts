@@ -1,11 +1,9 @@
 import axios from 'axios';
 
-// 7b85554150a7e64123db5fbaacc462d7
-
 export default class MoviesService {
   static async getPopular() {
     const response = await axios.get(
-      'https://api.themoviedb.org/3/movie/popular?api_key=7b85554150a7e64123db5fbaacc462d7',
+      `https://api.themoviedb.org/3/movie/popular?api_key=${import.meta.env.VITE_APP_APY_KEY}`,
       {
         params: {
           language: 'en-US',
@@ -18,7 +16,7 @@ export default class MoviesService {
 
   static async searchMovie(search = '') {
     const response = await axios.get(
-      'https://api.themoviedb.org/3/search/movie?api_key=7b85554150a7e64123db5fbaacc462d7',
+      `https://api.themoviedb.org/3/search/movie?api_key=${import.meta.env.VITE_APP_APY_KEY}`,
       {
         params: {
           language: 'en-US',
@@ -33,7 +31,7 @@ export default class MoviesService {
 
   static async getModieById(id: number) {
     const response = await axios.get(
-      `https://api.themoviedb.org/3/movie/${id}?api_key=7b85554150a7e64123db5fbaacc462d7`,
+      `https://api.themoviedb.org/3/movie/${id}?api_key=${import.meta.env.VITE_APP_APY_KEY}`,
       {
         params: {
           language: 'en-US',
@@ -45,7 +43,7 @@ export default class MoviesService {
 
   static async getTrailerByModieId(id: number) {
     const response = await axios.get(
-      `https://api.themoviedb.org/3/movie/${id}/videos?api_key=7b85554150a7e64123db5fbaacc462d7`,
+      `https://api.themoviedb.org/3/movie/${id}/videos?api_key=${import.meta.env.VITE_APP_APY_KEY}`,
       {
         params: {
           language: 'en-US',
@@ -57,7 +55,9 @@ export default class MoviesService {
 
   static async getActorsByModieId(id: number) {
     const response = await axios.get(
-      `https://api.themoviedb.org/3/movie/${id}/credits?api_key=7b85554150a7e64123db5fbaacc462d7`,
+      `https://api.themoviedb.org/3/movie/${id}/credits?api_key=${
+        import.meta.env.VITE_APP_APY_KEY
+      }`,
       {
         params: {
           language: 'en-US',
