@@ -19,7 +19,9 @@ export default function MovieCard({ movie }: IMovieCard) {
         </span>
         <img
           className="object-cover"
-          src={`https://image.tmdb.org/t/p/original${movie ? movie.poster_path : ''}`}
+          src={`https://image.tmdb.org/t/p/original${
+            movie.poster_path ? movie.poster_path : '/aEsAdMAhwKYFgnHHxMOknktQYKK.jpg'
+          }`}
           alt={movie.title}
         />
         <div className="grid place-content-center text-center text-gray-200">

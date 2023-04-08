@@ -10,12 +10,13 @@ export const useFetching = (callback: (s?: string) => Promise<void>) => {
       await callback(...args);
     } catch (e) {
       if (e instanceof Error) {
-        setError(e.message);
+        console.log(`Error in fetching ${e.name}`, e.message);
       }
+      setError("Oops! There is an error. Don't worry just reload the page 😃");
     } finally {
       setIsLoading(false);
     }
   };
 
-  return [fetching, isLoading, error];
+  return { fetching, isLoading, error };
 };

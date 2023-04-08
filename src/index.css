@@ -4,8 +4,13 @@
 
 @layer components {
   .App {
-    @apply bg-slate-400;
+    @apply bg-slate-400 min-h-[100vh];
   }
+
+  .search__icon {
+    @apply absolute right-3 top-1/2 w-6 h-6 -translate-y-1/2 opacity-50;
+  }
+
   .close-btn {
     position: absolute;
     display: flex;

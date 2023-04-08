@@ -18,7 +18,7 @@ export default class MoviesService {
 
   static async searchMovie(search = '') {
     const response = await axios.get(
-      'https://api.themoviedb.org/3/search/movie?api_key=7b85554150a7e64123db5fbaacc462d7query=scary&page=1&include_adult=false',
+      'https://api.themoviedb.org/3/search/movie?api_key=7b85554150a7e64123db5fbaacc462d7',
       {
         params: {
           language: 'en-US',
