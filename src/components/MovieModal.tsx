@@ -1,6 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
-import { Swiper } from 'swiper/react';
 import { createPortal } from 'react-dom';
 import ButtonClose from './ButtonClose';
 import { IMovie } from '../models/movie';
