@@ -3,6 +3,9 @@
 @tailwind utilities;
 
 @layer components {
+  .App {
+    @apply bg-slate-400;
+  }
   .close-btn {
     position: absolute;
     display: flex;

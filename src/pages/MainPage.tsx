@@ -21,10 +21,10 @@ export const MainPage: FC = () => {
     }
   }, []);
   return (
-    <div className="container mx-auto">
+    <div className="container mx-auto ">
       <SearchForm onFormSubmit={(str) => setSearch(str)} />
       <div>
-        <ul className="grid grid-flow-row gap-4 lg:grid-cols-4 sm:grid-cols-2 grid-cols-1">
+        <ul className="grid grid-flow-row gap-4 lg:grid-cols-4 p-4 sm:grid-cols-2 grid-cols-1">
           {movies.map((movie) => (
             <MovieCard movie={movie} key={movie.id} />
           ))}
