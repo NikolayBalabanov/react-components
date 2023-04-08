@@ -1,4 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
+import { Swiper } from 'swiper/react';
 import { createPortal } from 'react-dom';
 import ButtonClose from './ButtonClose';
 import { IMovie } from '../models/movie';
@@ -48,23 +50,23 @@ export default function MovieModal({ onClose, movie }: IMovieModal) {
     >
       <div
         ref={modalContent}
-        className="w-11/12 h-4/5 flex flex-col relative rounded-lg shadow-md bg-gray-700 md:px-[84px] px-10 py-[25px] -translate-y-10 duration-300 transition-transform dark:bg-gray-700"
+        className="w-11/12 h-4/5 flex flex-col relative rounded-lg shadow-md bg-gray-700 p-6  -translate-y-10 duration-300 transition-transform dark:bg-gray-700"
         onClick={(e) => e.stopPropagation()}
       >
         {isLoading && <Loader />}
         {error && (
           <h2 className="md:mb-5 mb-3 font-bold text-4xl">Oops! Something goes wrong...</h2>
         )}
-        <div className="h-full w-full flex gap-4 mb-[20px]">
-          <div className="flex w-1/3">
+        <div className="h-full w-full overflow-y-scroll flex lg:flex-row flex-col lg:justify-between items-center gap-4 mb-[20px]">
+          <div className="flex lg:w-1/3 w-1/2">
             <img className="object-fill h-full w-full" src={posterImg} alt={title} />
           </div>
-          <div className="flex flex-col items-center w-2/3 text-slate-200">
-            <h3 className="md:mb-5 mb-3 font-bold text-4xl ">{title}</h3>
+          <div className="flex flex-col h-full items-center lg:w-2/3 w-full text-slate-200">
+            <h3 className="md:mb-5 mb-3 font-bold lg:text-4xl text-3xl text-center ">{title}</h3>
             <p className="mb-3 rounded-lg text-center">{overview}</p>
             <ActorsList movieId={id} />
             <a
-              className="mb-[10px] px-4 py-1 self-center rounded-lg border-none bg-gray-400 hover:bg-gray-600 focus-visible:bg-gray-600 outline-none"
+              className="mb-[10px] px-4 py-1 self-center rounded-lg border-none bg-red-500 hover:bg-red-600 focus-visible:bg-gray-600 outline-none"
               href={`https://www.youtube.com/watch?v=${trailerLink}`}
               target="_blank"
               rel="noreferrer"

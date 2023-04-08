@@ -1,8 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { IActor } from '../models/actor';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Pagination, Scrollbar, A11y, Navigation, Autoplay } from 'swiper';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/scrollbar';
 import Actor from './Actor';
-import { useFetching } from '../hooks/useFetching';
+import { IActor } from '../models/actor';
 import MoviesService from '../API/MoviesService';
+import { useFetching } from '../hooks/useFetching';
 
 interface IActorsList {
   movieId: number;
@@ -15,10 +21,25 @@ export default function ActorsList({ movieId }: IActorsList) {
     setActors(response.data.cast);
   });
   const artorsList = actors.map((actor) => (
-    <Actor key={actor.id} name={actor.original_name} imgPath={actor.profile_path} />
+    <SwiperSlide key={actor.id}>
+      <Actor name={actor.original_name} imgPath={actor.profile_path} />
+    </SwiperSlide>
   ));
   useEffect(() => {
     fetching();
   }, []);
-  return <ul className="flex overflow-auto snap-mandatory">{artorsList}</ul>;
+  return (
+    <div className="w-full mb-3">
+      <Swiper
+        modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay]}
+        spaceBetween={10}
+        slidesPerView={5}
+        navigation
+        autoplay={{ delay: 3000 }}
+        loop
+      >
+        {artorsList}
+      </Swiper>
+    </div>
+  );
 }

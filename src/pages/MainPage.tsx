@@ -46,10 +46,11 @@ export const MainPage: FC = () => {
     <div className="container mx-auto ">
       <SearchForm onFormSubmit={(str) => setSearch(str)} />
       <div>
-        {(isPostsLoading || isSearchedLoading) && <Loader />}
         {fetchError && <ErrorMessage content={fetchError} />}
         {searchedError && <ErrorMessage content={searchedError} />}
-        {movies.length > 0 ? (
+        {isPostsLoading || isSearchedLoading ? (
+          <Loader />
+        ) : movies.length > 0 ? (
           <ul className="grid grid-flow-row gap-4 lg:grid-cols-4 p-4 sm:grid-cols-2 grid-cols-1">
             {movies.map((movie) => (
               <MovieCard movie={movie} key={movie.id} />
