@@ -28,7 +28,9 @@ export const MainPage: FC = () => {
     setMovies(response.data.results as IMovie[]);
   });
   useEffect(() => {
-    if (typeof fetchPosts === 'function') {
+    if (search && typeof searchedPosts === 'function') {
+      searchedPosts(search);
+    } else if (typeof fetchPosts === 'function') {
       fetchPosts();
     }
   }, []);
