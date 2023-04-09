@@ -46,8 +46,7 @@ export const MainPage: FC = () => {
     <div className="container mx-auto ">
       <SearchForm onFormSubmit={(str) => setSearch(str)} />
       <div>
-        {fetchError && <ErrorMessage content={fetchError} />}
-        {searchedError && <ErrorMessage content={searchedError} />}
+        {(fetchError || searchedError) && <ErrorMessage content={fetchError || searchedError} />}
         {isPostsLoading || isSearchedLoading ? (
           <Loader />
         ) : movies.length > 0 && !(fetchError || searchedError) ? (

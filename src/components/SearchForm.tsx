@@ -38,7 +38,7 @@ export const SearchForm: FC<ISearchForm> = ({ onFormSubmit }) => {
             type="text"
             value={value}
             onChange={(e) => handleChange(e)}
-            placeholder="Search a movie"
+            placeholder="Search a movie..."
           />
           {value ? <SearchClear onClear={() => handleClear()} /> : <SearchIncon />}
         </div>

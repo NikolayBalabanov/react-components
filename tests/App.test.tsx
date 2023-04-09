@@ -21,7 +21,7 @@ describe('App component tests:', () => {
       </BrowserRouter>
     );
     const user = userEvent.setup();
-    expect(screen.getByPlaceholderText('Store search')).toBeInTheDocument();
+    expect(screen.getByPlaceholderText('Search a movie...')).toBeInTheDocument();
     await user.click(screen.getByText(/about/));
     expect(screen.getByRole('heading', { level: 2 })).toHaveTextContent(/About page/);
   });
@@ -32,7 +32,7 @@ describe('App component tests:', () => {
       </MemoryRouter>
     );
     const user = userEvent.setup();
-    expect(screen.getByPlaceholderText('Store search')).toBeInTheDocument();
+    expect(screen.getByPlaceholderText('Search a movie...')).toBeInTheDocument();
     await user.click(screen.getByText(/forms/));
     expect(screen.getByRole('heading', { level: 2 })).toHaveTextContent(
       /Here you can add your contacts info/
