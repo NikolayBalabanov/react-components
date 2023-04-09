@@ -7,7 +7,13 @@ interface ISearchClearProps {
 
 export default function SearchClear({ onClear }: ISearchClearProps) {
   return (
-    <button className="search__icon hover:opacity-80" type="button" onClick={() => onClear()}>
+    <button
+      className="search__icon hover:opacity-80"
+      type="button"
+      id="clear"
+      data-testid="clear"
+      onClick={() => onClear()}
+    >
       <AiOutlineCloseCircle />
     </button>
   );

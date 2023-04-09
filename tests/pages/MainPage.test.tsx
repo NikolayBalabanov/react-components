@@ -1,11 +1,9 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import React from 'react';
 import userEvent from '@testing-library/user-event';
 import { MainPage } from '../../src/pages/MainPage';
-import { Mock } from 'vitest';
-import { setImmediate } from 'timers';
 import App from '../../src/App';
-import { BrowserRouter, MemoryRouter } from 'react-router-dom';
+import { MemoryRouter } from 'react-router-dom';
 import axios, { AxiosResponse } from 'axios';
 import { IMovie } from 'models/movie';
 
@@ -31,13 +29,13 @@ describe('Main Page with data:', () => {
   it('Loader exists before fetch execute', async () => {
     render(
       <MemoryRouter initialEntries={['/']}>
-        <App />
+        <MainPage />
       </MemoryRouter>
     );
     const loader = screen.getByText('🎥');
     expect(loader).not.toBe(null);
   });
-  it('Try to find movies cards after loading...', async () => {
+  it('Try to find movie card after loading...', async () => {
     const data = {
       results: [
         {
@@ -87,5 +85,100 @@ describe('Main Page with data:', () => {
       </MemoryRouter>
     );
     expect(await findByText('Creed III')).toBeInTheDocument();
+    expect(await findByText('7.3')).toBeInTheDocument();
+    expect(await findByText(/After dominating the boxing world/)).toBeInTheDocument();
+  });
+  it('Empty result after loading...', async () => {
+    const data = {
+      results: [],
+    };
+
+    (axios.get as jest.MockedFunction<typeof axios.get<IMovie[]>>).mockResolvedValue({
+      data,
+    } as unknown as AxiosResponse<IMovie[]>);
+
+    const { findByText } = render(
+      <MemoryRouter initialEntries={['/']}>
+        <App />
+      </MemoryRouter>
+    );
+    expect(
+      await findByText('Hmm... Result is empty. Try to serach something else!')
+    ).toBeInTheDocument();
+  });
+});
+
+describe('Search form with data:', () => {
+  it('Try to search Creed III movie', async () => {
+    render(
+      <MemoryRouter initialEntries={['/']}>
+        <MainPage />
+      </MemoryRouter>
+    );
+    const searchInput = screen.getByPlaceholderText('Search a movie...');
+    expect(searchInput).toBeInTheDocument();
+    const submitBtn = screen.getByText('Submit');
+    expect(submitBtn).toBeInTheDocument();
+    const user = userEvent.setup();
+    await user.type(searchInput, 'Creed III');
+    expect(searchInput).toHaveValue('Creed III');
+    const clearBtn = screen.findByTestId('clear');
+    expect(await clearBtn).toBeInTheDocument();
+    await user.click(await clearBtn);
+    expect(searchInput).toHaveValue('');
+    await user.type(searchInput, 'Creed III');
+    await user.click(submitBtn);
+    const data = {
+      results: [
+        {
+          adult: false,
+          backdrop_path: '/5i6SjyDbDWqyun8klUuCxrlFbyw.jpg',
+          genre_ids: [18, 28],
+          id: 677179,
+          original_language: 'en',
+          original_title: 'Creed III',
+          overview:
+            'After dominating the boxing world, Adonis Creed has been thriving in both his career and family life. When a childhood friend and former boxing prodigy, Damien Anderson, resurfaces after serving a long sentence in prison, he is eager to prove that he deserves his shot in the ring. The face-off between former friends is more than just a fight. To settle the score, Adonis must put his future on the line to battle Damien — a fighter who has nothing to lose.',
+          popularity: 9575.225,
+          poster_path: '/vJU3rXSP9hwUuLeq8IpfsJShLOk.jpg',
+          release_date: '2023-03-01',
+          title: 'Creed III',
+          video: false,
+          vote_average: 7.3,
+          vote_count: 807,
+        },
+      ],
+    };
+    (axios.get as jest.MockedFunction<typeof axios.get<IMovie[]>>).mockResolvedValue({
+      data,
+    } as unknown as AxiosResponse<IMovie[]>);
+
+    const { findByText } = render(
+      <MemoryRouter initialEntries={['/']}>
+        <App />
+      </MemoryRouter>
+    );
+    expect(await findByText('Creed III')).toBeInTheDocument();
+    expect(
+      await findByText('Hmm... Result is empty. Try to serach something else!')
+    ).toBeInTheDocument();
+  });
+  it('Try to check empty search result...', async () => {
+    const data = {
+      results: [],
+    };
+
+    (axios.get as jest.MockedFunction<typeof axios.get<IMovie[]>>).mockResolvedValue({
+      data,
+    } as unknown as AxiosResponse<IMovie[]>);
+
+    const { findByText } = render(
+      <MemoryRouter initialEntries={['/']}>
+        <App />
+      </MemoryRouter>
+    );
+    expect(
+      await findByText('Hmm... Result is empty. Try to serach something else!')
+    ).toBeInTheDocument();
   });
 });

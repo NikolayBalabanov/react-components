@@ -39,8 +39,8 @@ export default function MovieModal({ onClose, movie }: IMovieModal) {
   };
   const { poster_path, title, overview, id } = movie;
   const posterImg = poster_path ? BIG_IMG + poster_path : PLACEHOLDER_IMG;
-  // h-full w-full flex lg:flex-row flex-col lg:justify-between items-center gap-4 mb-[20px]
-  return createPortal(
+
+  return (
     <div
       ref={modal}
       onClick={() => close(onClose)}
@@ -75,7 +75,6 @@ export default function MovieModal({ onClose, movie }: IMovieModal) {
         </div>
         <ButtonClose callback={() => close(onClose)} />
       </div>
-    </div>,
-    document.getElementById('modal') as HTMLDivElement
+    </div>
   );
 }
