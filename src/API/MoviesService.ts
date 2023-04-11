@@ -2,9 +2,6 @@ import axios from 'axios';
 
 export default class MoviesService {
   static async getPopular() {
-    console.log('env', import.meta.env.VITE_APP_APY_KEY);
-    console.log('env2', process.env.VITE_APP_APY_KEY);
-
     const response = await axios.get(
       `https://api.themoviedb.org/3/movie/popular?api_key=${import.meta.env.VITE_APP_APY_KEY}`,
       {
