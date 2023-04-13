@@ -19,6 +19,7 @@ export const getMovieActors = createAsyncThunk(
     try {
       const response = await MoviesService.getActorsByMovieId(movieId);
       const actorsByMovie: IMovieActor[] = response.data.cast;
+      console.log('heey', actorsByMovie);
       return actorsByMovie;
     } catch (error) {
       return thunkAPI.rejectWithValue('An error occurred while searching movies');
@@ -27,7 +28,7 @@ export const getMovieActors = createAsyncThunk(
 );
 
 export const getMovieTrailer = createAsyncThunk(
-  'movie/fetchActors',
+  'movie/fetchTrailer',
   async (movieId: number, thunkAPI) => {
     try {
       const response = await MoviesService.getTrailerByMovieId(movieId);

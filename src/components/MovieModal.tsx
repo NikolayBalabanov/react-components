@@ -1,33 +1,30 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { createPortal } from 'react-dom';
-import ButtonClose from './ButtonClose';
-import { IMovie } from '../models/movie';
-import { useFetching } from '../hooks/useFetching';
-import MoviesService from '../API/MoviesService';
-import { BIG_IMG, PLACEHOLDER_IMG } from '../utils/consts';
-import ActorsList from './ActorsList';
+import React, { useEffect, useRef } from 'react';
 import Loader from './Loader';
+import ActorsList from './ActorsList';
+import ButtonClose from './ButtonClose';
+import ErrorMessage from './ErrorMessage';
+import { getMovie } from '../redux/ac/movie.ac';
+import { ButtonTrailer } from './ButtonTrailer';
+import { BIG_IMG, PLACEHOLDER_IMG } from '../utils/consts';
+import { useAppDispatch, useAppSelector } from '../hooks/redux';
 
 interface IMovieModal {
   onClose: () => void;
-  movie: IMovie;
+  movieId: number;
 }
 
-export default function MovieModal({ onClose, movie }: IMovieModal) {
-  const [trailerLink, setTrailerLink] = useState<string>('');
+export default function MovieModal({ onClose, movieId }: IMovieModal) {
+  const dispatch = useAppDispatch();
+  const { movie, isLoading, movieError } = useAppSelector((store) => store.movieSlice);
   const modal = useRef<HTMLDivElement | null>(null);
   const modalContent = useRef<HTMLDivElement | null>(null);
-  const { fetching, isLoading, error } = useFetching(async () => {
-    const response = await MoviesService.getTrailerByModieId(movie.id);
-    setTrailerLink(response.data.results[0]?.key);
-  });
 
   useEffect(() => {
+    dispatch(getMovie(movieId));
     setTimeout(() => {
       modal.current?.classList.remove('opacity-0');
       modalContent.current?.classList.remove('-translate-y-10');
-    });
-    fetching();
+    }, 300);
   }, []);
 
   const close = (fn: () => void) => {
@@ -37,8 +34,11 @@ export default function MovieModal({ onClose, movie }: IMovieModal) {
       fn();
     }, 300);
   };
-  const { poster_path, title, overview, id } = movie;
-  const posterImg = poster_path ? BIG_IMG + poster_path : PLACEHOLDER_IMG;
+  const getPosterImg = () => {
+    if (movie) {
+      return movie.poster_path ? BIG_IMG + movie.poster_path : PLACEHOLDER_IMG;
+    }
+  };
 
   return (
     <div
@@ -52,27 +52,26 @@ export default function MovieModal({ onClose, movie }: IMovieModal) {
         onClick={(e) => e.stopPropagation()}
       >
         {isLoading && <Loader />}
-        {error && (
-          <h2 className="md:mb-5 mb-3 font-bold text-4xl">Oops! Something goes wrong...</h2>
+        {movieError && <ErrorMessage content={movieError} />}
+        {movie && (
+          <div className="grid lg:grid-cols-3 grid-cols-1 gap-4 place-content-center">
+            <div className="col-span-1 flex justify-center">
+              <img
+                className="object-fill lg:max-h-[80vh] lg:w-full w-2/3 rounded-lg bg-gray-400 aspect-auto shadow-xl shadow-black"
+                src={getPosterImg()}
+                alt={movie.title}
+              />
+            </div>
+            <div className="col-span-2 flex flex-col h-full items-center justify-center w-full text-slate-200">
+              <h3 className="md:mb-5 mb-3 font-bold lg:text-4xl text-3xl text-center ">
+                {movie.title}
+              </h3>
+              <p className="mb-3 rounded-lg text-center">{movie.overview}</p>
+              <ActorsList movieId={movie.id} />
+              <ButtonTrailer movieId={movie.id} />
+            </div>
+          </div>
         )}
-        <div className="grid lg:grid-cols-3 grid-cols-1 gap-4 place-content-center">
-          <div className="col-span-1 flex justify-center">
-            <img className="object-fill h-full lg:w-full w-2/3 " src={posterImg} alt={title} />
-          </div>
-          <div className="col-span-2 flex flex-col h-full items-center justify-center w-full text-slate-200">
-            <h3 className="md:mb-5 mb-3 font-bold lg:text-4xl text-3xl text-center ">{title}</h3>
-            <p className="mb-3 rounded-lg text-center">{overview}</p>
-            <ActorsList movieId={id} />
-            <a
-              className="mb-[10px] px-4 py-1 self-center rounded-lg border-none bg-red-500 hover:bg-red-600 focus-visible:bg-gray-600 outline-none"
-              href={`https://www.youtube.com/watch?v=${trailerLink}`}
-              target="_blank"
-              rel="noreferrer"
-            >
-              Watch trailer!
-            </a>
-          </div>
-        </div>
         <ButtonClose callback={() => close(onClose)} />
       </div>
     </div>

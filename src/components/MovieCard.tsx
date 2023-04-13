@@ -32,7 +32,7 @@ export default function MovieCard({ movie }: IMovieCard) {
       <h3 className="text-center text-gray-200 sm:font-black text-base is-short font-normal ">
         {movie ? movie.original_title : ''}
       </h3>
-      {isModalOpen && <MovieModal movie={movie} onClose={() => setIsModalOpen(false)} />}
+      {isModalOpen && <MovieModal movieId={movie.id} onClose={() => setIsModalOpen(false)} />}
     </div>
   );
 }

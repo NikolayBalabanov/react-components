@@ -1,45 +1,35 @@
-import React, { useEffect, useState } from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Pagination, Scrollbar, A11y, Navigation, Autoplay } from 'swiper';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
-import 'swiper/css/scrollbar';
-import Actor from './Actor';
-import { IActor } from '../models/actor';
-import MoviesService from '../API/MoviesService';
-import { useFetching } from '../hooks/useFetching';
+import React, { useEffect } from 'react';
+import { SwiperSlide } from 'swiper/react';
+import { useAppDispatch, useAppSelector } from '../hooks/redux';
+import { getMovieActors } from '../redux/ac/movie.ac';
+import { SwipedList } from './SwipedList';
+import ActorCard from './ActorCard';
 
-interface IActorsList {
+interface IMovieActorsListProps {
   movieId: number;
 }
 
-export default function ActorsList({ movieId }: IActorsList) {
-  const [actors, setActors] = useState<IActor[]>([]);
-  const { fetching } = useFetching(async () => {
-    const response = await MoviesService.getActorsByModieId(movieId);
-    setActors(response.data.cast);
-  });
-  const artorsList = actors.map((actor) => (
+export default function MovieActorsList({ movieId }: IMovieActorsListProps) {
+  const dispatch = useAppDispatch();
+  const { movieActors } = useAppSelector((store) => store.movieSlice);
+  console.log('ACTORS', movieActors);
+  console.log('movieId', movieId);
+
+  useEffect(() => {
+    dispatch(getMovieActors(movieId));
+  }, []);
+
+  if (!movieActors.length) return <></>;
+  console.log('ACTORS');
+  const artorsList = movieActors.map((actor) => (
     <SwiperSlide key={actor.id}>
-      <Actor name={actor.original_name} imgPath={actor.profile_path} />
+      <ActorCard name={actor.original_name} imgPath={actor.profile_path} />
     </SwiperSlide>
   ));
-  useEffect(() => {
-    fetching();
-  }, []);
+
   return (
     <div className="w-full mb-3">
-      <Swiper
-        modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay]}
-        spaceBetween={10}
-        slidesPerView={5}
-        navigation
-        autoplay={{ delay: 3000 }}
-        loop
-      >
-        {artorsList}
-      </Swiper>
+      <SwipedList>{artorsList}</SwipedList>
     </div>
   );
 }

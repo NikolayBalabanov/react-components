@@ -43,10 +43,11 @@ export const movieSlice = createSlice({
     },
     [getMovieActors.fulfilled.type]: (state, action: PayloadAction<IMovieActor[]>) => {
       state.movieActors = action.payload;
+      console.log('qweqweqw', action.payload);
     },
-    [getMovieActors.pending.type]: (state) => {
-      state.movieActors = [];
-    },
+    // [getMovieActors.pending.type]: (state) => {
+    //   state.movieActors = [];
+    // },
     [getMovieActors.rejected.type]: (state, action: PayloadAction<string>) => {
       state.movieActorsError = action.payload;
     },
