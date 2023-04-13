@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { IDetailedMovie } from '../../models/movie';
 import { IMovieActor } from '../../models/actor';
-import { getMovie, getMovieActors, getMovieTrailer } from 'redux/ac/movie.ac';
+import { IDetailedMovie } from '../../models/movie';
+import { getMovie, getMovieActors, getMovieTrailer } from '../../redux/ac/movie.ac';
 
 export interface IMovieState {
   movie: IDetailedMovie | null;

@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import MoviesService from 'API/MoviesService';
-import { IMovie } from 'models/movie';
-import { IMoviesRequestProps } from 'types/reqests';
+import { IMovie } from '../../models/movie';
+import MoviesService from '../../API/MoviesService';
+import { IMoviesRequestProps } from '../../types/reqests';
 
 export const getMovies = createAsyncThunk(
   'movies/fetchByFilter',

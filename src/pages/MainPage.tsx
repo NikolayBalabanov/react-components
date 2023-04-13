@@ -1,66 +1,55 @@
-import React, { FC, useEffect, useState } from 'react';
-import { SearchForm } from '../components/SearchForm';
-import { useFetching } from '../hooks/useFetching';
-import MoviesService from '../API/MoviesService';
-import { IMovie } from '../models/movie';
-import MovieCard from '../components/MovieCard';
+import React, { FC, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import Loader from '../components/Loader';
-import ErrorMessage from '../components/ErrorMessage';
+import MovieCard from '../components/MovieCard';
+import Select from '../components/Select/Select';
 import EmptyResult from '../components/EmptyResult';
+import ErrorMessage from '../components/ErrorMessage';
+import { SearchForm } from '../components/Search/SearchForm';
+import { EMoviesFilter } from '../types/EMoviesFilter';
+import { PaginationBoard } from '../components/PaginationBoard';
+import { useAppDispatch, useAppSelector } from '../hooks/redux';
+import { getMovies, searchMovies } from '../redux/ac/movies.ac';
+import { selectFieldsMovies } from '../types/selectFieldsMovies';
 
 export const MainPage: FC = () => {
-  const [movies, setMovies] = useState<IMovie[]>([]);
-  const [search, setSearch] = useState<string>(localStorage.getItem('input') ?? '');
-  const {
-    fetching: fetchPosts,
-    isLoading: isPostsLoading,
-    error: fetchError,
-  } = useFetching(async () => {
-    const response = await MoviesService.getPopular();
-    setMovies(response.data.results as IMovie[]);
-  });
-  const {
-    fetching: searchedPosts,
-    isLoading: isSearchedLoading,
-    error: searchedError,
-  } = useFetching(async () => {
-    const response = await MoviesService.searchMovie(search);
-    setMovies(response.data.results as IMovie[]);
-  });
+  const [searchParams, setSearchParams] = useSearchParams();
+  const page = searchParams.get('page') || '1';
+  const searchMovie = searchParams.get('search-movie') || '';
+  const filterQuery = searchParams.get('filter') || EMoviesFilter.popular;
+  const { movies, isLoading, error, totalPages } = useAppSelector((store) => store.moviesSlice);
+  const dispatch = useAppDispatch();
+  const handlePaginate = (event: React.ChangeEvent<unknown>, value: number) => {
+    searchParams.set('page', value.toString());
+    setSearchParams(searchParams);
+  };
+  const moviesCards = movies.map((movie) => <MovieCard movie={movie} key={movie.id} />);
   useEffect(() => {
-    if (search && typeof searchedPosts === 'function') {
-      searchedPosts(search);
-    } else if (typeof fetchPosts === 'function') {
-      fetchPosts();
-    }
-  }, []);
-  useEffect(() => {
-    window.scroll(0, 0);
-    if (search && typeof searchedPosts === 'function') {
-      searchedPosts(search);
+    if (searchMovie) {
+      dispatch(searchMovies({ query: searchMovie, page: +page }));
     } else {
-      if (typeof fetchPosts === 'function') {
-        fetchPosts();
-      }
+      dispatch(getMovies({ query: filterQuery, page: +page }));
     }
-  }, [search]);
+  }, [searchMovie, page, filterQuery]);
   return (
-    <div className="container mx-auto ">
-      <SearchForm onFormSubmit={(str) => setSearch(str)} />
-      <div>
-        {(fetchError || searchedError) && <ErrorMessage content={fetchError || searchedError} />}
-        {isPostsLoading || isSearchedLoading ? (
-          <Loader />
-        ) : movies.length > 0 && !(fetchError || searchedError) ? (
-          <ul className="grid grid-flow-row gap-4 lg:grid-cols-4 p-4 sm:grid-cols-2 grid-cols-1">
-            {movies.map((movie) => (
-              <MovieCard movie={movie} key={movie.id} />
-            ))}
-          </ul>
-        ) : (
-          <EmptyResult />
-        )}
+    <div className="container mx-auto">
+      <div className="mx-auto max-w-2xl pt-5 flex gap-4 justify-around items-center sm:flex-row flex-col">
+        <SearchForm placeholder="Search a movie..." mode="search-movie" />
+        <Select selectFields={selectFieldsMovies} />
       </div>
+      <div>
+        {error && <ErrorMessage content={error} />}
+        {isLoading && <Loader />}
+        {movies.length > 0 && (
+          <ul className="grid grid-flow-row gap-2 xl:grid-cols-6 md:grid-cols-4 p-4 sm:grid-cols-3 grid-cols-2">
+            {moviesCards}
+          </ul>
+        )}
+        {!isLoading && movies.length === 0 && <EmptyResult />}
+      </div>
+      {movies.length !== 0 && (
+        <PaginationBoard onPaginate={handlePaginate} page={+page} totalPages={totalPages} />
+      )}
     </div>
   );
 };

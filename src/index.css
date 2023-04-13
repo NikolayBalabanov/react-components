@@ -11,6 +11,31 @@
     @apply absolute right-3 top-1/2 w-6 h-6 -translate-y-1/2 opacity-50;
   }
 
+  .select-item {
+    @apply relative z-20 flex items-center justify-between w-[200px] px-[15px] sm:py-[12px] py-3 text-gray-800 text-base leading-4 bg-slate-200 outline-none hover:bg-gray-400 focus-visible:bg-gray-400 hover:text-gray-200 focus-visible:text-gray-200 transition-colors duration-200;
+  }
+
+  .select-item:not(:last-child) {
+    @apply border-b border-b-gray-400;
+  }
+
+  .card-img {
+    @apply object-cover h-full w-full hover:scale-105 transition-transform duration-500;
+    aspect-ratio: 2/3;
+  }
+
+  .search__icon {
+    @apply absolute right-3 top-1/2 w-6 h-6 -translate-y-1/2 opacity-50;
+  }
+
+  .is-short {
+    @apply whitespace-nowrap overflow-hidden text-ellipsis break-words;
+  }
+
+  .dropped:last-child {
+    @apply rounded-b-lg;
+  }
+
   .close-btn {
     position: absolute;
     display: flex;
