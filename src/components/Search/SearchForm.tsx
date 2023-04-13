@@ -1,8 +1,10 @@
-import React, { FC, useEffect, useState } from 'react';
-import { ButtonSubmit } from '../ButtonSubmit';
+import React, { FC, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import SearchClear from './SearchClear';
 import SearchIncon from './SearchIncon';
-import { useSearchParams } from 'react-router-dom';
+import { ButtonSubmit } from '../ButtonSubmit';
+import { setSearch } from '../../redux/slices/searchSlice';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 
 interface ISearchForm {
   placeholder: string;
@@ -10,17 +12,19 @@ interface ISearchForm {
 }
 
 export const SearchForm: FC<ISearchForm> = ({ placeholder, mode }) => {
+  const dispatch = useAppDispatch();
+  const { search: storedSearch } = useAppSelector((store) => store.searchSlice);
   const [searchParams, setSearchParams] = useSearchParams();
   const search = searchParams.get(mode || '');
-  const [value, setValue] = useState<string>('');
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(e.target.value);
+    dispatch(setSearch(e.target.value));
   };
   useEffect(() => {
     const filter = searchParams.get('filter');
     const page = searchParams.get('page');
-    if (filter) setValue('');
+    if (filter) dispatch(setSearch(''));
     if (search || filter || page) return;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [search]);
   const applySearchParams = (searchValue: string) => {
     searchParams.delete('page');
@@ -35,12 +39,12 @@ export const SearchForm: FC<ISearchForm> = ({ placeholder, mode }) => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    applySearchParams(value);
+    applySearchParams(storedSearch);
   };
 
   const handleClear = () => {
     applySearchParams('');
-    setValue('');
+    dispatch(setSearch(''));
   };
   return (
     <div className="flex justify-center">
@@ -49,11 +53,11 @@ export const SearchForm: FC<ISearchForm> = ({ placeholder, mode }) => {
           <input
             className="border self-center rounded py-2 px-4 w-full bg-slate-200"
             type="text"
-            value={value}
+            value={storedSearch}
             onChange={(e) => handleChange(e)}
             placeholder={placeholder}
           />
-          {value ? <SearchClear onClear={() => handleClear()} /> : <SearchIncon />}
+          {storedSearch ? <SearchClear onClear={() => handleClear()} /> : <SearchIncon />}
         </div>
         <ButtonSubmit />
       </form>

@@ -30,6 +30,8 @@ export const moviesSlice = createSlice({
     },
     [getMovies.pending.type]: (state) => {
       state.isLoading = true;
+      state.error = '';
+      state.movies = [];
     },
     [getMovies.rejected.type]: (state, action: PayloadAction<string>) => {
       state.isLoading = false;
@@ -43,6 +45,8 @@ export const moviesSlice = createSlice({
     },
     [searchMovies.pending.type]: (state) => {
       state.isLoading = true;
+      state.error = '';
+      state.movies = [];
     },
     [searchMovies.rejected.type]: (state, action: PayloadAction<string>) => {
       state.isLoading = false;

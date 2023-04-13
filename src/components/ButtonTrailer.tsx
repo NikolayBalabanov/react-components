@@ -11,6 +11,7 @@ export const ButtonTrailer: FC<IButtonTrailer> = ({ movieId }) => {
   const { trailerLink } = useAppSelector((state) => state.movieSlice);
   useEffect(() => {
     dispatch(getMovieTrailer(movieId));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (!trailerLink) {

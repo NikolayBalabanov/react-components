@@ -12,15 +12,16 @@ interface IMovieActorsListProps {
 export default function MovieActorsList({ movieId }: IMovieActorsListProps) {
   const dispatch = useAppDispatch();
   const { movieActors } = useAppSelector((store) => store.movieSlice);
-  console.log('ACTORS', movieActors);
-  console.log('movieId', movieId);
 
   useEffect(() => {
-    dispatch(getMovieActors(movieId));
+    const loadData = () => {
+      dispatch(getMovieActors(movieId));
+    };
+    loadData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (!movieActors.length) return <></>;
-  console.log('ACTORS');
   const artorsList = movieActors.map((actor) => (
     <SwiperSlide key={actor.id}>
       <ActorCard name={actor.original_name} imgPath={actor.profile_path} />

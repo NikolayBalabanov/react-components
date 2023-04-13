@@ -5,8 +5,9 @@ import MovieCard from '../components/MovieCard';
 import Select from '../components/Select/Select';
 import EmptyResult from '../components/EmptyResult';
 import ErrorMessage from '../components/ErrorMessage';
-import { SearchForm } from '../components/Search/SearchForm';
 import { EMoviesFilter } from '../types/EMoviesFilter';
+import { setSearch } from '../redux/slices/searchSlice';
+import { SearchForm } from '../components/Search/SearchForm';
 import { PaginationBoard } from '../components/PaginationBoard';
 import { useAppDispatch, useAppSelector } from '../hooks/redux';
 import { getMovies, searchMovies } from '../redux/ac/movies.ac';
@@ -27,9 +28,11 @@ export const MainPage: FC = () => {
   useEffect(() => {
     if (searchMovie) {
       dispatch(searchMovies({ query: searchMovie, page: +page }));
+      dispatch(setSearch(searchMovie));
     } else {
       dispatch(getMovies({ query: filterQuery, page: +page }));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchMovie, page, filterQuery]);
   return (
     <div className="container mx-auto">

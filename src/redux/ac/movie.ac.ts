@@ -19,7 +19,6 @@ export const getMovieActors = createAsyncThunk(
     try {
       const response = await MoviesService.getActorsByMovieId(movieId);
       const actorsByMovie: IMovieActor[] = response.data.cast;
-      console.log('heey', actorsByMovie);
       return actorsByMovie;
     } catch (error) {
       return thunkAPI.rejectWithValue('An error occurred while searching movies');

@@ -24,7 +24,8 @@ export default function MovieModal({ onClose, movieId }: IMovieModal) {
     setTimeout(() => {
       modal.current?.classList.remove('opacity-0');
       modalContent.current?.classList.remove('-translate-y-10');
-    }, 300);
+    }, 200);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const close = (fn: () => void) => {

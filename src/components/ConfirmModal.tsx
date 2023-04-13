@@ -15,6 +15,7 @@ const ConfirmModal: FC<IConfirmProps> = ({ onConfirm }) => {
       modal.current?.classList.remove('opacity-0');
       modalContent.current?.classList.remove('-translate-y-10');
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const close = (fn: () => void) => {
