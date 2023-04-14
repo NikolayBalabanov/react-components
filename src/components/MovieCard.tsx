@@ -14,6 +14,7 @@ export default function MovieCard({ movie }: IMovieCard) {
     : PLACEHOLDER_IMG;
   return (
     <div
+      data-test={`testId-${movie.id}`}
       onClick={() => setIsModalOpen(true)}
       className="relative h-full flex flex-col justify-between p-2 md:gap-3 gap-1 group bg-slate-800 shadow-md rounded-lg cursor-pointer"
     >

@@ -12,7 +12,6 @@ interface IMovieActorsListProps {
 export default function MovieActorsList({ movieId }: IMovieActorsListProps) {
   const dispatch = useAppDispatch();
   const { movieActors } = useAppSelector((store) => store.movieSlice);
-
   useEffect(() => {
     const loadData = () => {
       dispatch(getMovieActors(movieId));

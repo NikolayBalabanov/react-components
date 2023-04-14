@@ -45,10 +45,12 @@ export default function MovieModal({ onClose, movieId }: IMovieModal) {
     <div
       ref={modal}
       onClick={() => close(onClose)}
+      data-testid="modal"
       className="flex items-center justify-center rounded-lg overflow-x-hidden overflow-y-auto fixed inset-0 z-30 bg-gray-500 bg-opacity-80 opacity-0 transition-opacity duration-300"
     >
       <div
         ref={modalContent}
+        data-testid="modalContent"
         className="w-11/12 h-[90vh] overflow-auto flex flex-col relative rounded-lg shadow-md  bg-gray-700 p-6 -translate-y-10 duration-300 transition-transform dark:bg-gray-700"
         onClick={(e) => e.stopPropagation()}
       >

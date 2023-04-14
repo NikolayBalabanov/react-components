@@ -3,22 +3,28 @@ import React from 'react';
 import { BrowserRouter, MemoryRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 import App from '../src/App';
+import { Provider } from 'react-redux';
+import store from '../src/redux/store';
 
 describe('App component tests:', () => {
   it('should have logo: "Searcher"', () => {
     render(
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
+      <Provider store={store}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </Provider>
     );
     const message = screen.getByRole('heading', { level: 1 });
     expect(message).toHaveTextContent('Searcher');
   });
   it('Renders about page if user click at about link', async () => {
     render(
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
+      <Provider store={store}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </Provider>
     );
     const user = userEvent.setup();
     expect(screen.getByPlaceholderText('Search a movie...')).toBeInTheDocument();
@@ -27,9 +33,11 @@ describe('App component tests:', () => {
   });
   it('Renders forms page if user click at forms link', async () => {
     render(
-      <MemoryRouter initialEntries={['/']}>
-        <App />
-      </MemoryRouter>
+      <Provider store={store}>
+        <MemoryRouter initialEntries={['/']}>
+          <App />
+        </MemoryRouter>
+      </Provider>
     );
     const user = userEvent.setup();
     expect(screen.getByPlaceholderText('Search a movie...')).toBeInTheDocument();
