@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
-import ActorCard from '../../src/components/ActorCard';
+import ActorCard from '../../src/components/Actor/ActorCard';
 import { PLACEHOLDER_IMG, SMALL_IMG } from '../../src/utils/consts';
 
 describe('Movie Modal tests:', () => {

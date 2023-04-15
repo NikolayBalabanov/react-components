@@ -1,12 +1,12 @@
 import React, { useEffect, useRef } from 'react';
-import Loader from './Loader';
-import ActorsList from './ActorsList';
-import ButtonClose from './ButtonClose';
-import ErrorMessage from './ErrorMessage';
-import { getMovie } from '../redux/ac/movie.ac';
-import { ButtonTrailer } from './ButtonTrailer';
-import { BIG_IMG, PLACEHOLDER_IMG } from '../utils/consts';
-import { useAppDispatch, useAppSelector } from '../hooks/redux';
+import Loader from '../UI/Loader';
+import ActorsList from '../Actor/ActorsList';
+import ButtonClose from '../UI/ButtonClose';
+import ErrorMessage from '../ErrorMessage';
+import { getMovie } from '../../redux/ac/movie.ac';
+import { ButtonTrailer } from '../UI/ButtonTrailer';
+import { BIG_IMG, PLACEHOLDER_IMG } from '../../utils/consts';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 
 interface IMovieModal {
   onClose: () => void;

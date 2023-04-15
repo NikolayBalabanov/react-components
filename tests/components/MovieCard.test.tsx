@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import MovieCard from '../../src/components/MovieCard';
+import MovieCard from '../../src/components/Movie/MovieCard';
 import { mockedDetailMovie, mockedMovieCard } from '../../src/mocks/mockedData';
 import { PLACEHOLDER_IMG } from '../../src/utils/consts';
 

@@ -2,7 +2,7 @@ import React, { FC, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import SearchClear from './SearchClear';
 import SearchIncon from './SearchIncon';
-import { ButtonSubmit } from '../ButtonSubmit';
+import { ButtonSubmit } from '../UI/ButtonSubmit';
 import { setSearch } from '../../redux/slices/searchSlice';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 

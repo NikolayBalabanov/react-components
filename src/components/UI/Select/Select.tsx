@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import SelectItem from './SelectItem';
 import Icon, { EIcons } from '../Icon';
-import { EMoviesFilter } from '../../types/EMoviesFilter';
+import { EMoviesFilter } from '../../../types/EMoviesFilter';
 import { TSelectFieldsMovies } from 'types/selectFieldsMovies';
 
 interface ISelectProps {

@@ -1,24 +1,16 @@
-import Form from '../components/Form';
-import React, { FC, useState } from 'react';
-import ContactItem from '../components/ContactItem';
-
-export interface IContact {
-  id: number;
-  name: string;
-  phone: string;
-  date: string[];
-  role: string;
-  favorite: boolean;
-  gender: 'male' | 'female';
-  photo: string;
-}
+import Form from '../components/Form/Form';
+import React, { FC } from 'react';
+import ContactItem from '../components/Form/ContactItem';
+import { useAppDispatch, useAppSelector } from '../hooks/redux';
+import { addContact } from '../redux/slices/contactsSlice';
+import { IContact } from '../types/contacts';
 
 const Forms: FC = () => {
-  const [contacts, setContacts] = useState<IContact[]>([]);
-  const hendleUpdateContacts = (newArr: IContact[]) => {
-    setContacts(newArr);
+  const dispatch = useAppDispatch();
+  const { contacts } = useAppSelector((store) => store.contactsSlice);
+  const hendleUpdateContacts = (newContact: IContact) => {
+    dispatch(addContact(newContact));
   };
-
   return (
     <div className="container mx-auto pt-5">
       <div className="container mx-auto max-w-3xl mb-3">

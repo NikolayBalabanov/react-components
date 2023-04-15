@@ -1,7 +1,7 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
-import MovieModal from '../../src/components/MovieModal';
+import MovieModal from '../../src/components/Movie/MovieModal';
 import userEvent from '@testing-library/user-event';
 import { Provider } from 'react-redux';
 import store from '../../src/redux/store';

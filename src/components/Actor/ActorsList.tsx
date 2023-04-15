@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { SwiperSlide } from 'swiper/react';
-import { useAppDispatch, useAppSelector } from '../hooks/redux';
-import { getMovieActors } from '../redux/ac/movie.ac';
-import { SwipedList } from './SwipedList';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { getMovieActors } from '../../redux/ac/movie.ac';
+import { SwipedList } from '../SwipedList';
 import ActorCard from './ActorCard';
 
 interface IMovieActorsListProps {

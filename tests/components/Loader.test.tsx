@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import Loader from '../../src/components/Loader';
+import Loader from '../../src/components/UI/Loader';
 
 describe('Loader', () => {
   it('contains emoji 🎥', () => {

@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useRef } from 'react';
-import ButtonClose from './ButtonClose';
-import ButtonConfirm from './ButtonConfirm';
+import ButtonClose from './UI/ButtonClose';
+import ButtonConfirm from './UI/ButtonConfirm';
 
 interface IConfirmProps {
   onConfirm: () => void;

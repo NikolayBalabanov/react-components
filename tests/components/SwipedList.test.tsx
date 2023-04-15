@@ -1,16 +1,12 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
-import userEvent from '@testing-library/user-event';
 import { render, screen } from '@testing-library/react';
 import store from '../../src/redux/store';
-import { EMoviesFilterText } from '../../src/types/EMoviesFilterText';
-import App from '../../src/App';
 import { SwipedList } from '../../src/components/SwipedList';
-import ActorCard from '../../src/components/ActorCard';
+import ActorCard from '../../src/components/Actor/ActorCard';
 import { mockedActor } from '../../src/mocks/mockedData';
 import { IMovieActor } from '../../src/models/actor';
-import MoviesService from '../../src/API/MoviesService';
 
 const mockedChildren: IMovieActor[] = [...Array(3).fill(mockedActor)];
 const mockedNodes = mockedChildren.map((actor, index) => (

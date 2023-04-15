@@ -1,5 +1,5 @@
 import React from 'react';
-import { EMoviesFilter } from '../../types/EMoviesFilter';
+import { EMoviesFilter } from '../../../types/EMoviesFilter';
 
 interface ISelectItem {
   onChooseFilter: (target: EMoviesFilter) => void;

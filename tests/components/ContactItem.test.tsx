@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import React from 'react';
-import ContactItem from '../../src/components/ContactItem';
+import ContactItem from '../../src/components/Form/ContactItem';
 
 const mockData = {
   id: 1,

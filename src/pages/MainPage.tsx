@@ -1,8 +1,8 @@
 import React, { FC, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import Loader from '../components/Loader';
-import MovieCard from '../components/MovieCard';
-import Select from '../components/Select/Select';
+import Loader from '../components/UI/Loader';
+import MovieCard from '../components/Movie/MovieCard';
+import Select from '../components/UI/Select/Select';
 import EmptyResult from '../components/EmptyResult';
 import ErrorMessage from '../components/ErrorMessage';
 import { EMoviesFilter } from '../types/EMoviesFilter';
@@ -48,7 +48,7 @@ export const MainPage: FC = () => {
             {moviesCards}
           </ul>
         )}
-        {!isLoading && movies.length === 0 && <EmptyResult />}
+        {!isLoading && movies.length === 0 && !error && <EmptyResult />}
       </div>
       {movies.length !== 0 && (
         <PaginationBoard onPaginate={handlePaginate} page={+page} totalPages={totalPages} />

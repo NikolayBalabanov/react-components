@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { IMovie } from '../models/movie';
+import { IMovie } from '../../models/movie';
 import MovieModal from './MovieModal';
-import { PLACEHOLDER_IMG } from '../utils/consts';
+import { PLACEHOLDER_IMG } from '../../utils/consts';
 
 interface IMovieCard {
   movie: IMovie;

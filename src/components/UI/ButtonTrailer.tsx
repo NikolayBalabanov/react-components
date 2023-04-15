@@ -1,6 +1,6 @@
 import React, { FC, useEffect } from 'react';
-import { getMovieTrailer } from '../redux/ac/movie.ac';
-import { useAppDispatch, useAppSelector } from '../hooks/redux';
+import { getMovieTrailer } from '../../redux/ac/movie.ac';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 
 interface IButtonTrailer {
   movieId: number;

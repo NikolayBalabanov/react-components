@@ -3,7 +3,7 @@ import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 import { render, screen } from '@testing-library/react';
-import Select from '../../src/components/Select/Select';
+import Select from '../../src/components/UI/Select/Select';
 import { selectFieldsMovies } from '../../src/types/selectFieldsMovies';
 import store from '../../src/redux/store';
 import { EMoviesFilterText } from '../../src/types/EMoviesFilterText';

@@ -1,5 +1,5 @@
 import React from 'react';
-import { PLACEHOLDER_IMG, SMALL_IMG } from '../utils/consts';
+import { PLACEHOLDER_IMG, SMALL_IMG } from '../../utils/consts';
 
 interface IActorCardProps {
   name: string;
