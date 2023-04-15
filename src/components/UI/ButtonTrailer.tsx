@@ -1,22 +1,14 @@
-import React, { FC, useEffect } from 'react';
-import { getMovieTrailer } from '../../redux/ac/movie.ac';
-import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import React, { FC } from 'react';
+import { movieAPI } from '../../services/MovieService';
 
 interface IButtonTrailer {
   movieId: number;
 }
 
 export const ButtonTrailer: FC<IButtonTrailer> = ({ movieId }) => {
-  const dispatch = useAppDispatch();
-  const { trailerLink } = useAppSelector((state) => state.movieSlice);
-  useEffect(() => {
-    dispatch(getMovieTrailer(movieId));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const { data: trailerLink } = movieAPI.useGetTrailerByMovieIdQuery(movieId);
 
-  if (!trailerLink) {
-    return <></>;
-  }
+  if (!trailerLink) return <></>;
 
   return (
     <a

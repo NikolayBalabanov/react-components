@@ -3,10 +3,9 @@ import Loader from '../UI/Loader';
 import ActorsList from '../Actor/ActorsList';
 import ButtonClose from '../UI/ButtonClose';
 import ErrorMessage from '../ErrorMessage';
-import { getMovie } from '../../redux/ac/movie.ac';
 import { ButtonTrailer } from '../UI/ButtonTrailer';
 import { BIG_IMG, PLACEHOLDER_IMG } from '../../utils/consts';
-import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { movieAPI } from '../../services/MovieService';
 
 interface IMovieModal {
   onClose: () => void;
@@ -14,18 +13,16 @@ interface IMovieModal {
 }
 
 export default function MovieModal({ onClose, movieId }: IMovieModal) {
-  const dispatch = useAppDispatch();
-  const { movie, isLoading, movieError } = useAppSelector((store) => store.movieSlice);
   const modal = useRef<HTMLDivElement | null>(null);
   const modalContent = useRef<HTMLDivElement | null>(null);
+  const { data, isLoading, error } = movieAPI.useGetMovieQuery(movieId);
+  const movie = data || null;
 
   useEffect(() => {
-    dispatch(getMovie(movieId));
     setTimeout(() => {
       modal.current?.classList.remove('opacity-0');
       modalContent.current?.classList.remove('-translate-y-10');
     }, 200);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const close = (fn: () => void) => {
@@ -55,7 +52,7 @@ export default function MovieModal({ onClose, movieId }: IMovieModal) {
         onClick={(e) => e.stopPropagation()}
       >
         {isLoading && <Loader />}
-        {movieError && <ErrorMessage content={movieError} />}
+        {error && <ErrorMessage content={'An error occurred while downloading movie'} />}
         {movie && (
           <div className="grid lg:grid-cols-3 grid-cols-1 gap-4 place-content-center">
             <div className="col-span-1 flex justify-center">

@@ -1,24 +1,16 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { SwiperSlide } from 'swiper/react';
-import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import { getMovieActors } from '../../redux/ac/movie.ac';
 import { SwipedList } from '../SwipedList';
 import ActorCard from './ActorCard';
+import { movieAPI } from '../../services/MovieService';
 
 interface IMovieActorsListProps {
   movieId: number;
 }
 
 export default function MovieActorsList({ movieId }: IMovieActorsListProps) {
-  const dispatch = useAppDispatch();
-  const { movieActors } = useAppSelector((store) => store.movieSlice);
-  useEffect(() => {
-    const loadData = () => {
-      dispatch(getMovieActors(movieId));
-    };
-    loadData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const { data } = movieAPI.useGetActorsByMovieIdQuery(movieId);
+  const movieActors = data?.cast || [];
 
   if (!movieActors.length) return <></>;
   const artorsList = movieActors.map((actor) => (

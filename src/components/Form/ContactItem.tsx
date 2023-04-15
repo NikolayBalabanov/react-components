@@ -1,5 +1,5 @@
-import { IContact } from 'pages/Forms';
 import React, { FC } from 'react';
+import { IContact } from '../../types/contacts';
 
 interface IContactItemProps {
   contact: IContact;

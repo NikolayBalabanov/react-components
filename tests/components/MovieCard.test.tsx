@@ -10,6 +10,7 @@ describe('MovieCard.test tests', () => {
     render(<MovieCard movie={testMovie} />);
     expect(await screen.findByText('Creed III')).toBeInTheDocument();
     expect(await screen.findByText('7.3')).toBeInTheDocument();
+    expect(await screen.findByText('7.3')).toHaveClass('bg-green-500');
     expect(await screen.findByAltText(mockedDetailMovie.title)).toBeInTheDocument();
     expect(await screen.findByAltText(mockedDetailMovie.title)).toHaveAttribute(
       'src',

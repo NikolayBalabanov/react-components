@@ -1,14 +1,14 @@
 import { combineReducers } from 'redux';
-import movieSlice from '../slices/movieSlice';
-import moviesSlice from '../slices/moviesSlice';
 import searchSlice from '../slices/searchSlice';
 import contactsSlice from '../slices/contactsSlice';
+import { moviesAPI } from '../../services/MoviesService';
+import { movieAPI } from '../../services/MovieService';
 
 const rootReducer = combineReducers({
-  movieSlice,
-  moviesSlice,
   searchSlice,
   contactsSlice,
+  [moviesAPI.reducerPath]: moviesAPI.reducer,
+  [movieAPI.reducerPath]: movieAPI.reducer,
 });
 
 export default rootReducer;
