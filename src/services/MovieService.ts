@@ -14,7 +14,7 @@ export const movieAPI = createApi({
           api_key: import.meta.env.VITE_APP_APY_KEY,
         },
       }),
-      providesTags: (result) => ['Movie'],
+      providesTags: () => ['Movie'],
     }),
     getTrailerByMovieId: build.query<ITrailerRes, number>({
       query: (movieId: number) => ({
@@ -23,7 +23,7 @@ export const movieAPI = createApi({
           api_key: import.meta.env.VITE_APP_APY_KEY,
         },
       }),
-      providesTags: (result) => ['Trailer'],
+      providesTags: () => ['Trailer'],
     }),
     getActorsByMovieId: build.query<IMovieActorRes, number>({
       query: (movieId: number) => ({
@@ -32,7 +32,7 @@ export const movieAPI = createApi({
           api_key: import.meta.env.VITE_APP_APY_KEY,
         },
       }),
-      providesTags: (result) => ['Actors'],
+      providesTags: () => ['Actors'],
     }),
   }),
 });

@@ -27,7 +27,7 @@ export const moviesAPI = createApi({
           },
         };
       },
-      providesTags: (result) => ['Movies'],
+      providesTags: () => ['Movies'],
     }),
   }),
 });
