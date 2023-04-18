@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import SearchClear from './SearchClear';
 import SearchIncon from './SearchIncon';
@@ -15,36 +15,47 @@ export const SearchForm: FC<ISearchForm> = ({ placeholder, mode }) => {
   const dispatch = useAppDispatch();
   const { search: storedSearch } = useAppSelector((store) => store.searchSlice);
   const [searchParams, setSearchParams] = useSearchParams();
-  const search = searchParams.get(mode || '');
+  const search = searchParams.get(mode) || '';
+  const [value, setValue] = useState(search);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(setSearch(e.target.value));
+    setValue(e.target.value);
   };
-  useEffect(() => {
-    const filter = searchParams.get('filter');
-    const page = searchParams.get('page');
-    if (filter) dispatch(setSearch(''));
-    if (search || filter || page) return;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [search]);
   const applySearchParams = (searchValue: string) => {
     searchParams.delete('page');
     searchParams.delete('filter');
     if (!searchValue) {
-      searchParams.delete('search-movie');
+      searchParams.delete(mode);
     } else {
       searchParams.set(mode, searchValue);
     }
+    dispatch(setSearch(searchValue));
     setSearchParams(searchParams);
   };
+  useEffect(() => {
+    const filter = searchParams.get('filter');
+    const page = searchParams.get('page');
+    const search = searchParams.get(mode);
+    if (filter) {
+      dispatch(setSearch(''));
+      setValue('');
+    }
+    if (search || filter || page) return;
+    if (!storedSearch) return;
+    searchParams.append(mode, storedSearch);
+    setSearchParams(searchParams);
+    setValue(storedSearch);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [search]);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    applySearchParams(storedSearch);
+    applySearchParams(value);
   };
 
   const handleClear = () => {
     applySearchParams('');
-    dispatch(setSearch(''));
+    setValue('');
   };
   return (
     <div className="flex justify-center">
@@ -53,11 +64,11 @@ export const SearchForm: FC<ISearchForm> = ({ placeholder, mode }) => {
           <input
             className="border self-center rounded py-2 px-4 w-full bg-slate-200"
             type="text"
-            value={storedSearch}
+            value={value}
             onChange={(e) => handleChange(e)}
             placeholder={placeholder}
           />
-          {storedSearch ? <SearchClear onClear={() => handleClear()} /> : <SearchIncon />}
+          {value ? <SearchClear onClear={() => handleClear()} /> : <SearchIncon />}
         </div>
         <ButtonSubmit />
       </form>
