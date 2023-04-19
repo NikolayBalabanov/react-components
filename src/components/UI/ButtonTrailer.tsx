@@ -7,7 +7,7 @@ interface IButtonTrailer {
 
 export const ButtonTrailer: FC<IButtonTrailer> = ({ movieId }) => {
   const { data } = movieAPI.useGetTrailerByMovieIdQuery(movieId);
-  const trailerLink = data?.results[0].key;
+  const trailerLink = data?.results[0]?.key;
   if (!trailerLink) return <></>;
 
   return (
