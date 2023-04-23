@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "esnext",
     "lib": ["dom", "esnext", "dom.iterable"],
-    "jsx": "react",
+    "jsx": "react-jsx",
     "module": "esnext",
     "moduleResolution": "node",
     "noImplicitAny": true,
@@ -10,17 +10,15 @@
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
+    "plugins": [{ "name": "typescript-plugin-css-modules" }],
     "strict": true,
     "skipLibCheck": true,
-    "baseUrl": "./src",
     "resolveJsonModule": true,
-    "types": ["vitest/globals"]
+    "types": ["vitest/globals", "@testing-library/jest-dom"]
   },
-  "include": [
-    "./src/**/*",
-    "styled.d.ts",
-    "tests/App.test.tsx",
-    "tests/components/Product.test.tsx",
-    "tests/pages/MainPage.test.tsx"
-  ]
+  "ts-node": {
+    "esm": true,
+    "transpileOnly": true
+  },
+  "include": ["src", "vite.config.ts", ".eslintrc.cjs"]
 }
