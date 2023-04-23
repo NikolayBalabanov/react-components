@@ -15,6 +15,7 @@ const PhoneInput: FC<IPhoneInput> = ({ error, name, register }) => {
   return (
     <>
       <input
+        id="inputPhone"
         className="border rounded py-1 px-4 mb-2 lg:w-80 sm:w-3/4 w-full"
         type="text"
         placeholder="Enter contact's phone"

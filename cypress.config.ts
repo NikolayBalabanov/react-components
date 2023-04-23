@@ -6,7 +6,11 @@ export default defineConfig({
     baseUrl: 'http://localhost:3333',
     setupNodeEvents(on, config) {
       codeCoverageTask(on, config);
+      return config;
       // implement node event listeners here
     },
   },
+  video: false,
+  fixturesFolder: false,
+  screenshotOnRunFailure: false,
 });

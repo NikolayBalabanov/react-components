@@ -14,7 +14,6 @@ export interface IAssetMap {
 
 async function render(url: string, res: Response, assetMap: IAssetMap) {
   let didError = false;
-  console.log('assetMap.script', assetMap.script);
 
   const { pipe } = renderToPipeableStream(
     <HtmlTemplate assets={assetMap}>

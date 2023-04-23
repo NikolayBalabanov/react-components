@@ -16,7 +16,7 @@ export default function MovieCard({ movie }: IMovieCard) {
     <div
       data-test={`testId-${movie.id}`}
       onClick={() => setIsModalOpen(true)}
-      className="relative h-full flex flex-col justify-between p-2 md:gap-3 gap-1 group bg-slate-800 shadow-md rounded-lg cursor-pointer"
+      className="movie-card relative h-full flex flex-col justify-between p-2 md:gap-3 gap-1 group bg-slate-800 shadow-md rounded-lg cursor-pointer"
     >
       <span
         className={`absolute z-10 pointer-events-none -top-1 -right-1 p-1 flex md:w-10 md:h-10 h-6 w-6 items-center justify-center rounded-full 

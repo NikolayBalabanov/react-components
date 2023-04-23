@@ -12,8 +12,10 @@
     "preview": "vite preview",
     "lint": "eslint --fix \"src/**/*.{ts,tsx,js,jsx}\"",
     "format": "prettier --write \"src/**/*.{ts,tsx,js,jsx,css,scss}\"",
-    "test": "vitest --coverage",
-    "coverage": "vitest run --coverage"
+    "test": "npm run test:unit && npm run test:e2e",
+    "test:unit": "vitest run --coverage",
+    "test:e2e": "start-server-and-test dev http://localhost:3333 cypress",
+    "cypress": "cypress run --e2e"
   },
   "dependencies": {
     "@emotion/react": "^11.10.6",
@@ -31,10 +33,12 @@
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.9.0",
     "swiper": "^9.0.5",
-    "ts-node": "^10.9.1"
+    "ts-node": "^10.9.1",
+    "vite-plugin-istanbul": "^4.0.1"
   },
   "devDependencies": {
     "@cypress/code-coverage": "^3.10.4",
+    "@istanbuljs/nyc-config-typescript": "^1.0.2",
     "@tailwindcss/forms": "^0.5.3",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^14.0.0",
@@ -59,6 +63,7 @@
     "msw": "^1.2.1",
     "postcss": "^8.4.21",
     "prettier": "^2.8.4",
+    "start-server-and-test": "^2.0.0",
     "tailwindcss": "^3.2.7",
     "typescript": "^4.9.3",
     "vite": "^4.2.0",

@@ -43,7 +43,7 @@ export default function MovieModal({ onClose, movieId }: IMovieModal) {
       ref={modal}
       onClick={() => close(onClose)}
       data-testid="modal"
-      className="flex items-center justify-center rounded-lg overflow-x-hidden overflow-y-auto fixed inset-0 z-30 bg-gray-500 bg-opacity-80 opacity-0 transition-opacity duration-300"
+      className="modal flex items-center justify-center rounded-lg overflow-x-hidden overflow-y-auto fixed inset-0 z-30 bg-gray-500 bg-opacity-80 opacity-0 transition-opacity duration-300"
     >
       <div
         ref={modalContent}
@@ -57,7 +57,7 @@ export default function MovieModal({ onClose, movieId }: IMovieModal) {
           <div className="grid lg:grid-cols-3 grid-cols-1 gap-4 place-content-center">
             <div className="col-span-1 flex justify-center">
               <img
-                className="object-fill lg:max-h-[80vh] lg:w-full w-2/3 rounded-lg bg-gray-400 aspect-auto shadow-xl shadow-black"
+                className="modal__poster object-fill lg:max-h-[80vh] lg:w-full w-2/3 rounded-lg bg-gray-400 aspect-auto shadow-xl shadow-black"
                 src={getPosterImg()}
                 alt={movie.title}
               />
