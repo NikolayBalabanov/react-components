@@ -1,87 +1,54 @@
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
-
 import express from 'express';
-import { ViteDevServer } from 'vite';
+import { createServer } from 'vite';
+
+import fs from 'fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const isTest = process.env.VITEST;
+const HTML = path.resolve(__dirname, 'index.html');
+
 const PORT = process.env.PORT || 3333;
 
-export async function createServer(
-  root = process.cwd(),
-  isProd = process.env.NODE_ENV === 'production'
-) {
+async function startServer() {
   const app = express();
-  const resolve = (p: string) => path.resolve(__dirname, p);
-  let vite: ViteDevServer;
+  const vite = await createServer({ server: { middlewareMode: true }, appType: 'custom' });
 
-  if (!isProd) {
-    vite = await (
-      await import('vite')
-    ).createServer({
-      root,
-      logLevel: isTest ? 'error' : 'info',
-      server: {
-        middlewareMode: true,
-        watch: {
-          usePolling: true,
-          interval: 100,
-        },
-        hmr: true,
-      },
-      appType: 'custom',
-    });
+  app.use(vite.middlewares);
 
-    app.use(vite.middlewares);
-  } else {
-    app.use(
-      (await import('serve-static')).default(resolve('dist/client'), {
-        index: false,
-      })
-    );
-  }
+  app.use('*', async (request, response) => {
+    const url = request.originalUrl;
 
-  app.use('*', async (req, res) => {
     try {
-      if (!isProd) {
-        const render = (await vite.ssrLoadModule('./src/mainServer.tsx')).render;
-        const assetMap = { script: 'src/mainClient.tsx' };
-        render(req, res, assetMap);
-      } else {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        const render = (await import('./dist/server/mainServer.js')).render;
-        const script =
-          '/assets/' +
-          fs.readdirSync(resolve('./dist/client/assets')).filter((fn: string) => fn.endsWith('js'));
-        const style =
-          '/assets/' +
-          fs
-            .readdirSync(resolve('./dist/client/assets'))
-            .filter((fn: string) => fn.endsWith('css'));
-        const assetMap = { style, script };
-        render(req.originalUrl, res, assetMap);
+      let template = fs.readFileSync(HTML, 'utf8');
+      template = await vite.transformIndexHtml(url, template);
+      const [startHTML, endHTML] = template.split('not rendered');
+      const render = (await vite.ssrLoadModule('./src/mainServer.tsx')).render;
+
+      try {
+        response.write(startHTML);
+        const stream = render(url, {
+          onShellReady() {
+            stream.pipe(response);
+          },
+          onAllReady() {
+            response.write(endHTML);
+            response.end();
+          },
+        });
+      } catch (error) {
+        console.error(error);
       }
-    } catch (e) {
-      if (e instanceof Error) {
-        !isProd && vite.ssrFixStacktrace(e);
-        console.log(e.stack);
-        res.status(500).end(e.stack);
-      }
+    } catch (error) {
+      console.error(error);
     }
   });
 
-  return { app };
+  return app;
 }
 
-if (!isTest) {
-  createServer()
-    .then(({ app }) =>
-      app.listen(PORT, () => {
-        console.log(`http://localhost:${PORT}`);
-      })
-    )
-    .catch((e) => console.error(e));
-}
+startServer().then((app) => {
+  app.listen(PORT, () => {
+    console.log(`Server is running: http://localhost:${PORT}`);
+  });
+});
